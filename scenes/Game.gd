@@ -29,16 +29,27 @@ func _input(event):
 
 		var is_empity_cell: bool = map.get_cell_source_id(BOARD_LAYER, cell_coords) == -1
 		if !is_empity_cell:
-			players[curr_player_idx].move_to(cell_local_position)
+			current_player.move_to(cell_local_position)
 			curr_player_idx += 1
 			curr_player_idx %= len(players)
-
+			current_player = players[curr_player_idx]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 
+func get_player_cell(player: Player, map: TileMap)->Vector2i:
+	var cell_coords = map.local_to_map(player.position)
+	return cell_coords
+
 
 func _on_button_roll_result(roll_value:int):
 	movement = roll_value
 	print(movement)
+
+	# now we know where the player can go
+	var player_cell = get_player_cell(current_player, map)
+	map.draw_cone(player_cell, movement)
+
+
+	
