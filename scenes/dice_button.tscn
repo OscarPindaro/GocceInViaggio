@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0nue3yv2xiec"]
+
+[ext_resource type="Texture2D" uid="uid://b0ykgly3axrd0" path="res://asset/dado.png" id="1_an1fn"]
+
+[node name="dice_button" type="TextureButton"]
+offset_right = 101.0
+offset_bottom = 101.0
+texture_normal = ExtResource("1_an1fn")
+ignore_texture_size = true
+stretch_mode = 0
