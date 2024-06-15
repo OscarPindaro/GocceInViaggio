@@ -2,9 +2,12 @@ extends CharacterBody2D
 class_name Player
 
 
+signal finished_movement()
+
 @export var movement_duration: float = 1
 @export var mov_transition: Tween.TransitionType = Tween.TRANS_LINEAR
 var mov_tween: Tween
+
 
 
 
@@ -23,3 +26,7 @@ func move_to(target_position: Vector2):
 		mov_tween.kill()
 	mov_tween = create_tween()
 	mov_tween.tween_property(self, "position", target_position, movement_duration).set_trans(mov_transition).set_ease(Tween.EASE_OUT)
+	mov_tween.tween_callback(on_mov_tween_end)
+
+func on_mov_tween_end():
+	finished_movement.emit()

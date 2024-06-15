@@ -18,4 +18,5 @@ func _process(delta):
 
 func _on_pressed():
 	var roll_value =  randi_range(min_value,max_value)
+	self.disabled= true
 	roll_result.emit(roll_value)
