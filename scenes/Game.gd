@@ -25,18 +25,26 @@ func _ready():
 
 func _input(event):
 	if event is InputEventMouseButton and event.is_pressed():
-		var mouse_position = get_local_mouse_position()
+		var mouse_position: Vector2 = get_local_mouse_position()
 		# coordinate in the tilemap
-		var cell_coords = map.local_to_map(mouse_position)
+		var cell_coords: Vector2i = map.local_to_map(mouse_position)
 		# cell center 
-		var cell_local_position = map.map_to_local(cell_coords)
+		var cell_local_position: Vector2 = map.map_to_local(cell_coords)
 
 		var is_empity_cell: bool = map.get_cell_source_id(FEASIBLE_LAYER, cell_coords) == -1
-		var old_player_cell = map.local_to_map(current_player.position)
+		var old_player_cell: Vector2i = map.local_to_map(current_player.position)
 		if !is_empity_cell:
 					# first of all, let's clear the layer
 			map.clear_layer(FEASIBLE_LAYER)
-			current_player.move_to(cell_local_position)
+			# let's compute the path
+			var path_cells: Array[Vector2i] = map.compute_path(old_player_cell, cell_coords)
+			print(path_cells)
+			var path_positions: Array[Vector2] = map.convert_cells_to_positions(path_cells)
+			# convert from Vector2i to Vector2
+			
+			# move player
+			# current_player.move_to(cell_local_position)
+			current_player.move_along_path(path_positions)
 			var n_cells_moved = cell_coords.y - old_player_cell.y
 			# remove the number of cells
 			print("n_cells_moved ", n_cells_moved)

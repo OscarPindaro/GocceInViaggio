@@ -28,5 +28,18 @@ func move_to(target_position: Vector2):
 	mov_tween.tween_property(self, "position", target_position, movement_duration).set_trans(mov_transition).set_ease(Tween.EASE_OUT)
 	mov_tween.tween_callback(on_mov_tween_end)
 
+func move_along_path(target_positions: Array[Vector2]):
+	# tween along e path of positions
+	if mov_tween:
+		mov_tween.kill()
+	mov_tween = create_tween()
+	# the whole animation lasts in long and short paths
+	var single_trans_duration: float = movement_duration / len(target_positions)
+	for position in target_positions:
+		mov_tween.tween_property(self, "position", position, single_trans_duration).set_trans(mov_transition).set_ease(Tween.EASE_OUT)
+	# when movement stops, emit stop signal
+	mov_tween.tween_callback(on_mov_tween_end)
+
+
 func on_mov_tween_end():
 	finished_movement.emit()
