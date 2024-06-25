@@ -20,8 +20,8 @@ func draw_cone(cell_positon: Vector2i, cone_depth: int):
 	print("position ", cell_positon)
 	for depth_idx in range(1, cone_depth+1):
 		# since it's a cone, at depth d, the cone is large 2d+1 (from cell -d and cell+d )
-		var start_cell_x: int = cell_positon.x - depth_idx
-		var end_cell_x: int = cell_positon.x + depth_idx
+		# var start_cell_x: int = cell_positon.x - depth_idx
+		# var end_cell_x: int = cell_positon.x + depth_idx
 		for width_idx in range(-depth_idx, +depth_idx+1):
 			# check that there is a BOARD CELL in that position
 			var draw_position = cell_positon + Vector2i(width_idx ,depth_idx)
